@@ -1,0 +1,22 @@
+RewriteEngine On
+
+# Redirect root to login
+RewriteRule ^$ login.php [L]
+
+# Security headers
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options DENY
+Header always set X-XSS-Protection "1; mode=block"
+
+# Hide sensitive files
+<Files "config.php">
+    Require all denied
+</Files>
+
+<Files "*.sql">
+    Require all denied
+</Files>
+
+# Custom error pages
+ErrorDocument 404 /404.php
+ErrorDocument 403 /403.php
