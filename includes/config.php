@@ -1,23 +1,22 @@
 <?php
-// Database configuration
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'courier_system');
+// Database configuration for MySQL
+$db_host = 'localhost';
+$db_name = 'courier_system';
+$db_user = 'root';
+$db_pass = '';
 
-// Create database connection
 try {
-    $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
+    $pdo = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 } catch(PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }
 
 // Start session
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+session_start();
+
+// Define base URL
+$base_url = "http://localhost";
 
 // Security functions
 function sanitize_input($data) {
